@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/baseline_home_24"
+        android:iconTint="#F2ECEC"
+        android:title="Home" />
+    <item
+        android:id="@+id/nav_category"
+        android:icon="@drawable/baseline_menu_book_24"
+        android:title="Thể loại" />
+    <item
+        android:id="@+id/nav_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:iconTint="#574848"
+        android:title="Search" />
+    <item
+        android:id="@+id/nav_account"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Account" />
+</menu>
