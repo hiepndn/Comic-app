@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
+
 }
 
 android {
@@ -48,4 +49,6 @@ dependencies {
     implementation ("com.google.android.gms:play-services-tasks:18.0.1")
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
+    implementation ("com.google.firebase:firebase-firestore:24.6.0")
+
 }
