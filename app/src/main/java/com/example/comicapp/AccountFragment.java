@@ -1,89 +1,81 @@
 package com.example.comicapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccountFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextView loginText, welcomeText;
+    private Button registerButton, logoutButton;
 
     public AccountFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccountFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AccountFragment newInstance(String param1, String param2) {
-        AccountFragment fragment = new AccountFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
+
+        // Ánh xạ các thành phần giao diện
+        loginText = view.findViewById(R.id.textViewLogin);
+        registerButton = view.findViewById(R.id.buttonRegister);
+        welcomeText = view.findViewById(R.id.welcome_text);
+        logoutButton = view.findViewById(R.id.buttonLogout); // Đảm bảo ID đúng
+
+        // Lấy trạng thái đăng nhập từ SharedPreferences
+        SharedPreferences prefs = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        boolean isLoggedIn = prefs.getBoolean("isLoggedIn", false);
+        String username = prefs.getString("username", "Người dùng");
+
+        // Cập nhật giao diện
+        updateUI(isLoggedIn, username);
+
+        // Xử lý khi nhấn Đăng nhập
+        loginText.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ManDangnhap.class);
+            startActivity(intent);
+        });
+
+        // Xử lý khi nhấn Đăng xuất
+        logoutButton.setOnClickListener(v -> logout());
+
+        return view;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    private void updateUI(boolean isLoggedIn, String username) {
+        if (isLoggedIn) {
+            // Hiển thị lời chào và nút Đăng xuất
+            loginText.setVisibility(View.GONE);
+            registerButton.setVisibility(View.GONE);
+            welcomeText.setVisibility(View.VISIBLE);
+            logoutButton.setVisibility(View.VISIBLE);
+            welcomeText.setText("Chào mừng " + username + " đã đăng nhập!");
+        } else {
+            // Hiển thị nút Đăng nhập và Đăng ký
+            loginText.setVisibility(View.VISIBLE);
+            registerButton.setVisibility(View.VISIBLE);
+            welcomeText.setVisibility(View.GONE);
+            logoutButton.setVisibility(View.GONE);
         }
     }
 
+    private void logout() {
+        // Xóa trạng thái đăng nhập
+        SharedPreferences prefs = requireActivity().getSharedPreferences("UserPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear(); // Xóa toàn bộ dữ liệu
+        editor.apply();
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_account, container, false);
-
-        TextView textViewLogin = view.findViewById(R.id.textViewLogin);
-        Button buttonRegister = view.findViewById(R.id.buttonRegister);
-
-        textViewLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ManDangnhap.class);
-                startActivity(intent);
-            }
-        });
-
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ManDangky.class);
-                startActivity(intent);
-            }
-        });
-
-        return view;
+        // Cập nhật giao diện về trạng thái chưa đăng nhập
+        updateUI(false, "");
     }
 }

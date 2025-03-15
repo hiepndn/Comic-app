@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_comic"
+        android:icon="@drawable/baseline_home_24"
+        android:iconTint="#F2ECEC"
+        android:title="Đăng truyện" />
+
+    <item
+        android:id="@+id/nav_delete"
+        android:icon="@android:drawable/ic_notification_clear_all"
+        android:iconTint="#574848"
+        android:title="Xóa truyện" />
+    <item
+        android:id="@+id/nav_account_author"
+        android:icon="@drawable/baseline_person_24"
+        android:title="Tài khoản" />
+</menu>

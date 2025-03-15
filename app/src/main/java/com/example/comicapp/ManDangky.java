@@ -1,5 +1,6 @@
 package com.example.comicapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,12 +21,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ManDangky extends AppCompatActivity {
-    private EditText edtEmail, edtPassword;
+    private EditText edtEmail;
+    private EditText edtPassword;
+    private EditText edtUsername;
     private Button btnDangKy, btnTroVeDangNhap;
     private CheckBox chkAuthor;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,7 @@ public class ManDangky extends AppCompatActivity {
         // Ánh xạ các thành phần
         edtEmail = findViewById(R.id.email);
         edtPassword = findViewById(R.id.password);
+        edtUsername = findViewById(R.id.username);
         btnDangKy = findViewById(R.id.dky_button);
         btnTroVeDangNhap = findViewById(R.id.dnhap);
         chkAuthor = findViewById(R.id.chkAuthor);
@@ -48,7 +53,8 @@ public class ManDangky extends AppCompatActivity {
             public void onClick(View v) {
                 String email = edtEmail.getText().toString().trim();
                 String password = edtPassword.getText().toString().trim();
-                boolean isAuthor = chkAuthor.isChecked(); // Kiểm tra checkbox tác giả
+                String username = edtUsername.getText().toString().trim();
+                boolean isAuthor = chkAuthor != null && chkAuthor.isChecked(); // Đảm bảo giá trị chính xác của checkbox
 
                 if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
                     Toast.makeText(ManDangky.this, "Vui lòng nhập đầy đủ thông tin!", Toast.LENGTH_SHORT).show();
@@ -60,12 +66,14 @@ public class ManDangky extends AppCompatActivity {
                     return;
                 }
 
+
+                // Register the user
                 mAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 FirebaseUser user = mAuth.getCurrentUser();
                                 if (user != null) {
-                                    saveUserToDatabase(user.getUid(), email, isAuthor);
+                                    saveUserToDatabase(user.getUid(), email, username, isAuthor);
                                 }
                             } else {
                                 Toast.makeText(ManDangky.this, "Đăng ký thất bại: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -84,15 +92,25 @@ public class ManDangky extends AppCompatActivity {
         });
     }
 
-    private void saveUserToDatabase(String userId, String email, boolean isAuthor) {
+    private void saveUserToDatabase(String userId, String email, String username, boolean isAuthor) {
         Map<String, Object> user = new HashMap<>();
         user.put("email", email);
+        user.put("username", username);
         user.put("role", isAuthor ? "author" : "user"); // Gán vai trò tác giả hoặc người dùng bình thường
 
         db.collection("users").document(userId).set(user)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(ManDangky.this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(ManDangky.this, AuthorActivity.class));
+
+                    // Chuyển màn hình dựa trên vai trò
+                    Intent intent;
+                    if (isAuthor) {
+                        intent = new Intent(ManDangky.this, AuthorActivity.class);
+                    } else {
+                        intent = new Intent(ManDangky.this, AccountFragment.class);
+                    }
+
+                    startActivity(intent);
                     finish();
                 })
                 .addOnFailureListener(e -> Toast.makeText(ManDangky.this, "Lỗi khi lưu dữ liệu!", Toast.LENGTH_SHORT).show());

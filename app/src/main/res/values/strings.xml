@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Comicapp</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Thêm các chuỗi bị lỗi -->
+    <string name="welcome_logged_in">Chào mừng bạn đã đăng nhập!</string>
+    <string name="please_login_register">Vui lòng đăng nhập hoặc đăng ký!</string>
 </resources>

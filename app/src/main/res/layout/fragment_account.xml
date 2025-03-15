@@ -8,8 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="25dp">
+        android:paddingTop="25dp"
+        android:gravity="center_horizontal">
 
+        <!-- Thông tin tài khoản -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="77dp"
@@ -22,8 +24,9 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginEnd="8dp"
-                android:background="@drawable/user"
-                android:scaleType="centerCrop" />
+                android:src="@drawable/user"
+                android:scaleType="centerCrop"
+                 />
 
             <TextView
                 android:id="@+id/textViewLogin"
@@ -31,10 +34,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:padding="8dp"
+                android:padding="12dp"
+                android:minHeight="48dp"
                 android:text="Bấm để đăng nhập"
                 android:textColor="#000000"
-                android:textSize="18sp" />
+                android:textSize="20sp"
+                android:clickable="true"
+                android:focusable="true" />
 
             <Button
                 android:id="@+id/buttonRegister"
@@ -42,9 +48,28 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="#9A9CEA"
                 android:padding="8dp"
-                android:text="Đăng ký"
-                android:textColor="#FFFFFF" />
+                android:text="Đăng ký "
+                android:textColor="#F5F5F5" />
         </LinearLayout>
+
+        <!-- Hiển thị lời chào sau khi đăng nhập -->
+        <TextView
+            android:id="@+id/welcome_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chào mừng"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:gravity="center"
+            android:paddingTop="20dp"
+            android:visibility="gone" />
+        <Button
+            android:id="@+id/buttonLogout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đăng xuất"
+            android:visibility="gone" />
 
     </LinearLayout>
 </ScrollView>

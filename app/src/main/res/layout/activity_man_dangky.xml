@@ -89,5 +89,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/password" />
 
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="337dp"
+            android:layout_height="56dp"
+            android:hint="Username"
+            android:inputType="text"
+            android:padding="12dp"
+            app:layout_constraintBottom_toTopOf="@+id/email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.794" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
