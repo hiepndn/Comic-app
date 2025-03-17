@@ -3,10 +3,13 @@ package com.example.comicapp;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +62,33 @@ public class CategoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_categories, container, false);
+//        return inflater.inflate(R.layout.fragment_categories, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        // Tìm SearchView
+        SearchView searchView = view.findViewById(R.id.searchView);
+
+        // Khi SearchView được focus, sẽ chuyển sang SearchFragment
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                navigateToSearchFragment();
+            }
+        });
+
+        return view;
+    }
+
+    private void navigateToSearchFragment() {
+
+        SearchView searchView = requireView().findViewById(R.id.searchView);
+        searchView.clearFocus(); // Bỏ focus để tránh lỗi giữ bàn phím
+
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.replace(R.id.fragment_container, new SearchFragment()); // Chuyển đến SearchFragment
+        transaction.addToBackStack(null); // Cho phép quay lại màn trước
+        transaction.commit();
+
+        ((MainActivity) requireActivity()).receiveDataFromFragment(R.id.nav_search);
     }
 }

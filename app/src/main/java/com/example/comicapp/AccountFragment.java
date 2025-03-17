@@ -45,6 +45,11 @@ public class AccountFragment extends Fragment {
             startActivity(intent);
         });
 
+        registerButton.setOnClickListener( v -> {
+            Intent intent = new Intent(getActivity(), ManDangky.class);
+            startActivity(intent);
+        });
+
         // Xử lý khi nhấn Đăng xuất
         logoutButton.setOnClickListener(v -> logout());
 

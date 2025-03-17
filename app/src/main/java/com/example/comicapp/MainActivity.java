@@ -1,6 +1,9 @@
 package com.example.comicapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -12,9 +15,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initBottomNavigationView(R.id.nav_home);
+    }
 
+    public void initBottomNavigationView(int data){
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         bottomNavigationView.setOnItemSelectedListener(item -> {
             Fragment selectedFragment = null;
 
@@ -35,12 +40,11 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
+        bottomNavigationView.setSelectedItemId(data);
+    }
 
-        // Mặc định mở HomeFragment
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new HomeFragment())
-                    .commit();
-        }
+    public void receiveDataFromFragment(int data) {
+        Log.d("MainActivity", "Dữ liệu nhận được từ Fragment: " + data);
+        initBottomNavigationView(data);
     }
 }

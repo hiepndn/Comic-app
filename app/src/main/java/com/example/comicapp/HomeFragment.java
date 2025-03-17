@@ -1,6 +1,8 @@
 package com.example.comicapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void navigateToSearchFragment() {
+
         SearchView searchView = requireView().findViewById(R.id.searchView);
         searchView.clearFocus(); // Bỏ focus để tránh lỗi giữ bàn phím
 
@@ -43,5 +46,8 @@ public class HomeFragment extends Fragment {
         transaction.replace(R.id.fragment_container, new SearchFragment()); // Chuyển đến SearchFragment
         transaction.addToBackStack(null); // Cho phép quay lại màn trước
         transaction.commit();
+
+        ((MainActivity) requireActivity()).receiveDataFromFragment(R.id.nav_search);
     }
+
 }
