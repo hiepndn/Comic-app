@@ -6,4 +6,6 @@
     </style>
 
     <style name="Theme.Comicapp" parent="Base.Theme.Comicapp" />
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar"/>
+
 </resources>
