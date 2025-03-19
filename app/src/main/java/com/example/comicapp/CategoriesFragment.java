@@ -1,74 +1,55 @@
 package com.example.comicapp;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.SearchView;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class CategoriesFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private RecyclerView recyclerView;
+    private StoryAdapter storyAdapter;
+    private List<String> storyList;
 
     public CategoriesFragment() {
-        // Required empty public constructor
+        super(R.layout.fragment_categories);
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoriesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CategoriesFragment newInstance(String param1, String param2) {
-        CategoriesFragment fragment = new CategoriesFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_categories, container, false);
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        recyclerView = view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // Dùng LinearLayoutManager để hỗ trợ cuộn
+        recyclerView.setNestedScrollingEnabled(true); // Cho phép cuộn mượt hơn
 
-        // Tìm SearchView
+        storyList = new ArrayList<>();
+        storyAdapter = new StoryAdapter(storyList);
+        recyclerView.setAdapter(storyAdapter);
+
+        // Xử lý sự kiện khi nhấn nút chọn thể loại
+        Button btnComic = view.findViewById(R.id.btnComic);
+        Button btnNovel = view.findViewById(R.id.btnNovel);
+        Button btnStory = view.findViewById(R.id.btnStory);
+
+        btnComic.setOnClickListener(v -> loadStories("comic"));
+        btnNovel.setOnClickListener(v -> loadStories("novel"));
+        btnStory.setOnClickListener(v -> loadStories("story"));
+
+        // Xử lý tìm kiếm với SearchView
         SearchView searchView = view.findViewById(R.id.searchView);
-
-        // Khi SearchView được focus, sẽ chuyển sang SearchFragment
         searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 navigateToSearchFragment();
@@ -78,8 +59,37 @@ public class CategoriesFragment extends Fragment {
         return view;
     }
 
-    private void navigateToSearchFragment() {
+    private void loadStories(String category) {
+        storyList.clear();
 
+        List<String> baseStories = new ArrayList<>();
+        switch (category) {
+            case "comic":
+                baseStories.add("One Piece");
+                baseStories.add("Naruto");
+                baseStories.add("Dragon Ball");
+                break;
+            case "novel":
+                baseStories.add("Harry Potter");
+                baseStories.add("Sherlock Holmes");
+                baseStories.add("The Lord of the Rings");
+                break;
+            case "story":
+                baseStories.add("Chiếc lá cuối cùng");
+                baseStories.add("Tắt đèn");
+                baseStories.add("Lão Hạc");
+                break;
+        }
+
+
+        for (int i = 0; i < 10; i++) {
+            storyList.addAll(baseStories);
+        }
+
+        storyAdapter.notifyDataSetChanged();
+    }
+
+    private void navigateToSearchFragment() {
         SearchView searchView = requireView().findViewById(R.id.searchView);
         searchView.clearFocus(); // Bỏ focus để tránh lỗi giữ bàn phím
 
