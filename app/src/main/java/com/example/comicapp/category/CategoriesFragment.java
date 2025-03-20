@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.category;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comicapp.MainActivity;
+import com.example.comicapp.R;
+import com.example.comicapp.category.adapter.StoryAdapter;
+import com.example.comicapp.search.SearchFragment;
+
 import java.util.ArrayList;
 import java.util.List;
 

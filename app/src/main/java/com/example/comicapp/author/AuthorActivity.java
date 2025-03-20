@@ -1,17 +1,17 @@
-package com.example.comicapp;
+package com.example.comicapp.author;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.comicapp.author.add.AuthorComicFragment;
+import com.example.comicapp.author.del.AuthorDeleteFragment;
+import com.example.comicapp.R;
+import com.example.comicapp.account.AccountFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AuthorActivity extends AppCompatActivity {

@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.search;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.example.comicapp.R;
+import com.example.comicapp.home.HomeFragment;
 
 public class SearchFragment extends Fragment {
 

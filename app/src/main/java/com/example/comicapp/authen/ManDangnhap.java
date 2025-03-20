@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.authen;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.AuthResult;
+import com.example.comicapp.author.AuthorActivity;
+import com.example.comicapp.MainActivity;
+import com.example.comicapp.R;
+import com.example.comicapp.account.AccountFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
