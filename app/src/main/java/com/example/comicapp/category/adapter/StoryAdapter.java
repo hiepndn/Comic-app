@@ -12,8 +12,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
-import com.example.comicapp.Story;
-import com.example.comicapp.category.fragmnet.ChaptersFragment;
 
 import java.util.List;
 

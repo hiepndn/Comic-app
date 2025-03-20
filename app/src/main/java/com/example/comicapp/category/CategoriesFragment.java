@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.MainActivity;
 import com.example.comicapp.R;
+import com.example.comicapp.Story;
 import com.example.comicapp.category.adapter.StoryAdapter;
 import com.example.comicapp.search.SearchFragment;
 
