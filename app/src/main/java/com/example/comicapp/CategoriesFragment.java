@@ -20,7 +20,8 @@ public class CategoriesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private StoryAdapter storyAdapter;
-    private List<String> storyList;
+    private List<Story> storyList;
+
 
     public CategoriesFragment() {
         super(R.layout.fragment_categories);
@@ -58,37 +59,29 @@ public class CategoriesFragment extends Fragment {
 
         return view;
     }
-
     private void loadStories(String category) {
         storyList.clear();
 
-        List<String> baseStories = new ArrayList<>();
         switch (category) {
             case "comic":
-                baseStories.add("One Piece");
-                baseStories.add("Naruto");
-                baseStories.add("Dragon Ball");
+                storyList.add(new Story("One Piece", R.drawable.one_piece));
+                storyList.add(new Story("Naruto", R.drawable.one_piece));
+                storyList.add(new Story("Dragon Ball", R.drawable.one_piece));
                 break;
             case "novel":
-                baseStories.add("Harry Potter");
-                baseStories.add("Sherlock Holmes");
-                baseStories.add("The Lord of the Rings");
+                storyList.add(new Story("Harry Potter", R.drawable.one_piece));
+                storyList.add(new Story("Sherlock Holmes", R.drawable.one_piece));
+                storyList.add(new Story("The Lord of the Rings", R.drawable.one_piece));
                 break;
             case "story":
-                baseStories.add("Chiếc lá cuối cùng");
-                baseStories.add("Tắt đèn");
-                baseStories.add("Lão Hạc");
+                storyList.add(new Story("Chiếc lá cuối cùng", R.drawable.one_piece));
+                storyList.add(new Story("Tắt đèn", R.drawable.one_piece));
+                storyList.add(new Story("Lão Hạc", R.drawable.one_piece));
                 break;
-        }
-
-
-        for (int i = 0; i < 10; i++) {
-            storyList.addAll(baseStories);
         }
 
         storyAdapter.notifyDataSetChanged();
     }
-
     private void navigateToSearchFragment() {
         SearchView searchView = requireView().findViewById(R.id.searchView);
         searchView.clearFocus(); // Bỏ focus để tránh lỗi giữ bàn phím

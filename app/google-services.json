@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "661200515306",
+    "firebase_url": "https://comicapp-1672f-default-rtdb.firebaseio.com",
     "project_id": "comicapp-1672f",
     "storage_bucket": "comicapp-1672f.firebasestorage.app"
   },
