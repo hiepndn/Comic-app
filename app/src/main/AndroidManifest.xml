@@ -13,16 +13,16 @@
         android:theme="@style/Theme.Comicapp"
         tools:targetApi="31">
         <activity
-            android:name=".StoryAdapter"
+            android:name=".category.adapter.StoryAdapter"
             android:exported="false" />
         <activity
-            android:name=".AuthorActivity"
+            android:name=".author.AuthorActivity"
             android:exported="false" />
         <activity
-            android:name=".ManDangky"
+            android:name=".authen.ManDangky"
             android:exported="false" />
         <activity
-            android:name=".ManDangnhap"
+            android:name=".authen.ManDangnhap"
             android:exported="false" />
         <activity
             android:name=".start_page"

@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.authen;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,12 +7,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.AuthResult;
+import com.example.comicapp.author.AuthorActivity;
+import com.example.comicapp.MainActivity;
+import com.example.comicapp.R;
+import com.example.comicapp.account.AccountFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -21,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ManDangnhap extends AppCompatActivity {
     private EditText emailedit, passwordedit;
     private Button dnhap_button, dky_button;
+    private ImageView back;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
@@ -38,10 +43,17 @@ public class ManDangnhap extends AppCompatActivity {
         passwordedit = findViewById(R.id.password);
         dnhap_button = findViewById(R.id.dnhap_button);
         dky_button = findViewById(R.id.dky_button);
+        back = findViewById(R.id.back);
 
         // Set button listeners
         dnhap_button.setOnClickListener(v -> login());
         dky_button.setOnClickListener(v -> register());
+        back.setOnClickListener(v -> back());
+    }
+
+    private void back() {
+        Intent intent = new Intent(ManDangnhap.this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void register() {

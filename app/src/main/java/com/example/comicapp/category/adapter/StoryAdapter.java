@@ -1,4 +1,5 @@
-package com.example.comicapp;
+package com.example.comicapp.category.adapter;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,11 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.comicapp.R;
+import com.example.comicapp.Story;
+import com.example.comicapp.category.fragmnet.ChaptersFragment;
+
 import java.util.List;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHolder> {

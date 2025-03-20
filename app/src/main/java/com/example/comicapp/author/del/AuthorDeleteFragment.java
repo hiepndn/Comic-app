@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.author.del;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.comicapp.R;
 
 /**
  * A simple {@link Fragment} subclass.

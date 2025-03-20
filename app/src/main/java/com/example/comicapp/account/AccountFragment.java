@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.account;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.comicapp.authen.ManDangky;
+import com.example.comicapp.authen.ManDangnhap;
+import com.example.comicapp.R;
 
 public class AccountFragment extends Fragment {
 

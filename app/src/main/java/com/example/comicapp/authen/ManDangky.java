@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.authen;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -8,11 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.comicapp.author.AuthorActivity;
+import com.example.comicapp.MainActivity;
+import com.example.comicapp.R;
+import com.example.comicapp.account.AccountFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,6 +32,7 @@ public class ManDangky extends AppCompatActivity {
     private CheckBox chkAuthor;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private ImageView back;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -42,6 +47,7 @@ public class ManDangky extends AppCompatActivity {
         btnDangKy = findViewById(R.id.dky_button);
         btnTroVeDangNhap = findViewById(R.id.dnhap);
         chkAuthor = findViewById(R.id.chkAuthor);
+        back = findViewById(R.id.back);
 
         // Khởi tạo Firebase
         mAuth = FirebaseAuth.getInstance();
@@ -82,6 +88,7 @@ public class ManDangky extends AppCompatActivity {
             }
         });
 
+        back.setOnClickListener(v -> back());
 
         btnTroVeDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +97,11 @@ public class ManDangky extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void back () {
+        Intent intent = new Intent(ManDangky.this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void saveUserToDatabase(String userId, String email, String username, boolean isAuthor) {
