@@ -40,7 +40,7 @@ public class AuthorActivity extends AppCompatActivity {
                 } else if (itemId == R.id.nav_delete) {
                     selectedFragment = new AuthorDeleteFragment();
                 } else if (itemId == R.id.nav_account_author) {
-                    selectedFragment = new AuthorAccountFragment();
+                    selectedFragment = new AccountFragment();
                 }
                 if (selectedFragment != null) {
                     getSupportFragmentManager().beginTransaction()
