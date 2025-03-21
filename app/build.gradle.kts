@@ -44,6 +44,7 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
+    implementation("io.appwrite:sdk-for-android:6.1.0")
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
     implementation ("com.google.android.gms:play-services-tasks:18.0.1")

@@ -1,5 +1,6 @@
 package com.example.comicapp.category.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
+import com.example.comicapp.page.pageComic;
 
 import java.util.List;
 
@@ -49,6 +51,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         public StoryViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textStoryTitle);
+            textView.setOnClickListener(v -> {
+                Intent switchPage = new Intent(itemView.getContext(), pageComic.class);
+                itemView.getContext().startActivity(switchPage);
+            });
         }
     }
 }
