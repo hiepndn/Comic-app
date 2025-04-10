@@ -11,12 +11,17 @@ import com.example.comicapp.category.CategoriesFragment;
 import com.example.comicapp.home.HomeFragment;
 import com.example.comicapp.search.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import io.appwrite.Client;
+import io.appwrite.services.Account;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Khởi tạo Appwrite Client
+        Client client = new Client(this)
+                .setProject("67dc2a3c0010a8f3b2d0");
         setContentView(R.layout.activity_main);
         initBottomNavigationView(R.id.nav_home);
     }

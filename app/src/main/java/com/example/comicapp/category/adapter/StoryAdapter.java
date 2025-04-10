@@ -1,5 +1,6 @@
 package com.example.comicapp.category.adapter;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
+import com.example.comicapp.page.pageComic;
 import com.example.comicapp.Story;
 import com.example.comicapp.category.fragmnet.ChaptersFragment;
 
@@ -65,6 +67,10 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         public StoryViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textStoryTitle);
+            textView.setOnClickListener(v -> {
+                Intent switchPage = new Intent(itemView.getContext(), pageComic.class);
+                itemView.getContext().startActivity(switchPage);
+            });
             imageView = itemView.findViewById(R.id.storyImage); // Link ImageView
         }
     }

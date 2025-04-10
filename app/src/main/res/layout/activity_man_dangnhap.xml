@@ -12,29 +12,42 @@
     android:background="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="411dp"
+        android:layout_height="731dp">
 
         <Button
             android:id="@+id/dnhap_button"
             android:layout_width="342dp"
             android:layout_height="68dp"
-            android:layout_marginBottom="300dp"
-            android:backgroundTint="#30D0AA"
+            android:layout_marginBottom="312dp"
+            android:backgroundTint="#AB8A30FF"
             android:padding="12dp"
             android:text="Đăng nhập"
+            android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.567"
+            app:layout_constraintHorizontal_bias="0.492"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/dky_button"
+            android:layout_width="141dp"
+            android:layout_height="51dp"
+            android:layout_marginBottom="200dp"
+            android:backgroundTint="#AB8A30FF"
+            android:padding="12dp"
+            android:text="Đăng ký"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText
             android:id="@+id/email"
-            android:layout_width="333dp"
-            android:layout_height="61dp"
+            android:layout_width="381dp"
+            android:layout_height="79dp"
             android:autofillHints="emailAddress"
-            android:drawableRight="@drawable/baseline_person_24"
-            android:hint="Email"
+            android:hint="User name"
             android:inputType="text"
             android:padding="12dp"
             app:layout_constraintBottom_toTopOf="@+id/password"
@@ -45,9 +58,9 @@
 
         <EditText
             android:id="@+id/password"
-            android:layout_width="332dp"
-            android:layout_height="63dp"
-            android:layout_marginBottom="20dp"
+            android:layout_width="376dp"
+            android:layout_height="91dp"
+            android:layout_marginBottom="48dp"
             android:autofillHints="password"
             android:hint="Password"
             android:inputType="textPassword"
@@ -57,30 +70,18 @@
             app:layout_constraintHorizontal_bias="0.489"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/dky_button"
-            android:layout_width="342dp"
-            android:layout_height="68dp"
-            android:layout_marginBottom="216dp"
-            android:backgroundTint="#30D0AA"
-            android:padding="12dp"
-            android:text="Đăng ký"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="5dp"
+            android:text="Bạn chưa có tài khoản ?"
+            app:layout_constraintBottom_toTopOf="@+id/dky_button"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.486"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.045"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/back" />
+            app:layout_constraintTop_toBottomOf="@+id/dnhap_button"
+            app:layout_constraintVertical_bias="0.63" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
