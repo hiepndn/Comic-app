@@ -18,7 +18,7 @@ import com.example.comicapp.MainActivity;
 import com.example.comicapp.R;
 import com.example.comicapp.Story;
 import com.example.comicapp.category.adapter.StoryAdapter;
-import com.example.comicapp.search.SearchFragment;
+import com.example.comicapp.search.fragment.SearchFragment;
 
 import java.util.ArrayList;
 import java.util.List;

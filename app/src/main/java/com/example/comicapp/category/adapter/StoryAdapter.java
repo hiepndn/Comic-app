@@ -1,5 +1,9 @@
 package com.example.comicapp.category.adapter;
 
+import android.graphics.Color;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +20,12 @@ import com.example.comicapp.Story;
 import com.example.comicapp.category.fragmnet.ChaptersFragment;
 
 import java.util.List;
+import java.util.Locale;
 
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHolder> {
 
-    private List<Story> storyList; // Update list to use Story objects
+    private List<Story> storyList;
+    private String currentQuery = "";
 
     public StoryAdapter(List<Story> storyList) {
         this.storyList = storyList;
@@ -35,13 +41,38 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
     @Override
     public void onBindViewHolder(@NonNull StoryViewHolder holder, int position) {
         Story story = storyList.get(position);
-        holder.textView.setText(story.getName());
-        holder.imageView.setImageResource(story.getImageResId()); // Set the image resource
+        String name = story.getName();
+
+        // Highlight phần trùng khớp từ khóa
+        if (!currentQuery.isEmpty()) {
+            String lowerName = name.toLowerCase(Locale.getDefault());
+            String lowerQuery = currentQuery.toLowerCase(Locale.getDefault());
+
+            int start = lowerName.indexOf(lowerQuery);
+            if (start >= 0) {
+                int end = start + currentQuery.length();
+                SpannableString spannable = new SpannableString(name);
+                spannable.setSpan(
+                        new ForegroundColorSpan(Color.RED),
+                        start,
+                        end,
+                        Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                );
+                holder.textView.setText(spannable);
+            } else {
+                holder.textView.setText(name);
+            }
+        } else {
+            holder.textView.setText(name);
+        }
+
+        holder.imageView.setImageResource(story.getImageResId());
+
         holder.itemView.setOnClickListener(v -> {
             FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.fragment_container, new ChaptersFragment(story.getName()));
-            transaction.addToBackStack(null); // Cho phép quay lại màn hình trước
+            transaction.addToBackStack(null);
             transaction.commit();
         });
     }
@@ -51,23 +82,24 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         return storyList.size();
     }
 
-    // Update stories
     public void updateStories(List<Story> newStories) {
         storyList.clear();
         storyList.addAll(newStories);
         notifyDataSetChanged();
     }
 
+    public void setQuery(String query) {
+        this.currentQuery = query != null ? query.toLowerCase() : "";
+    }
+
     public static class StoryViewHolder extends RecyclerView.ViewHolder {
         TextView textView;
-        ImageView imageView; // Add ImageView
+        ImageView imageView;
 
         public StoryViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textStoryTitle);
-            imageView = itemView.findViewById(R.id.storyImage); // Link ImageView
+            imageView = itemView.findViewById(R.id.storyImage);
         }
     }
-
-
 }

@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 import com.example.comicapp.account.AccountFragment;
 import com.example.comicapp.category.CategoriesFragment;
 import com.example.comicapp.home.HomeFragment;
-import com.example.comicapp.search.SearchFragment;
+import com.example.comicapp.search.fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

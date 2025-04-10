@@ -12,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.comicapp.MainActivity;
 import com.example.comicapp.R;
-import com.example.comicapp.search.SearchFragment;
+import com.example.comicapp.search.fragment.SearchFragment;
 
 public class HomeFragment extends Fragment {
 
