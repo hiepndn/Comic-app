@@ -1,9 +1,13 @@
 package com.example.comicapp.category.adapter;
 
+<<<<<<< HEAD
 import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+=======
+import android.content.Intent;
+>>>>>>> devhiep
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +20,12 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
+<<<<<<< HEAD
 import com.example.comicapp.Story;
 import com.example.comicapp.category.fragmnet.ChaptersFragment;
+=======
+import com.example.comicapp.page.pageComic;
+>>>>>>> devhiep
 
 import java.util.List;
 import java.util.Locale;
@@ -99,7 +107,14 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         public StoryViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.textStoryTitle);
+<<<<<<< HEAD
             imageView = itemView.findViewById(R.id.storyImage);
+=======
+            textView.setOnClickListener(v -> {
+                Intent switchPage = new Intent(itemView.getContext(), pageComic.class);
+                itemView.getContext().startActivity(switchPage);
+            });
+>>>>>>> devhiep
         }
     }
 }

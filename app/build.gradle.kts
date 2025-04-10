@@ -44,12 +44,17 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(platform("com.google.firebase:firebase-bom:33.10.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth")
+    implementation("io.appwrite:sdk-for-android:6.1.0")
     implementation ("com.google.android.gms:play-services-tasks:18.0.1")
     implementation ("com.google.android.material:material:1.9.0")
     implementation ("androidx.recyclerview:recyclerview:1.2.1")
+<<<<<<< HEAD
     implementation ("com.google.firebase:firebase-firestore:24.6.0")
     implementation ("com.google.firebase:firebase-storage:20.1.0")
     implementation ("com.google.firebase:firebase-database:20.1.0")
+=======
+    implementation("com.google.firebase:firebase-database")
+    implementation ("com.squareup.picasso:picasso:2.8")
+    implementation ("at.favre.lib:bcrypt:0.10.2")
+>>>>>>> devhiep
 }
