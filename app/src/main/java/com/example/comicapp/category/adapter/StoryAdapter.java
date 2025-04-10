@@ -4,22 +4,22 @@ import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.comicapp.R;
 import com.example.comicapp.Story;
 import com.example.comicapp.category.fragmnet.ChaptersFragment;
-import com.example.comicapp.page.pageComic;
 
 import java.util.List;
 import java.util.Locale;
@@ -45,19 +45,17 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         Story story = storyList.get(position);
         String name = story.getName();
 
-        // Highlight phần trùng khớp từ khóa
+        // Highlight tên truyện khớp từ khóa
         if (!currentQuery.isEmpty()) {
             String lowerName = name.toLowerCase(Locale.getDefault());
             String lowerQuery = currentQuery.toLowerCase(Locale.getDefault());
-
             int start = lowerName.indexOf(lowerQuery);
             if (start >= 0) {
                 int end = start + currentQuery.length();
                 SpannableString spannable = new SpannableString(name);
                 spannable.setSpan(
                         new ForegroundColorSpan(Color.RED),
-                        start,
-                        end,
+                        start, end,
                         Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 );
                 holder.textView.setText(spannable);
@@ -68,12 +66,18 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
             holder.textView.setText(name);
         }
 
-        holder.imageView.setImageResource(story.getImageResId());
+        // Load ảnh từ URL bằng Glide
+        Glide.with(holder.imageView.getContext())
+                .load(story.getImg())
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_foreground)
+                .into(holder.imageView);
 
+       
         holder.itemView.setOnClickListener(v -> {
             FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fragment_container, new ChaptersFragment(story.getName()));
+            transaction.replace(R.id.fragment_container, new ChaptersFragment(story.getId())); // truyền id
             transaction.addToBackStack(null);
             transaction.commit();
         });
@@ -102,10 +106,6 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
             super(itemView);
             textView = itemView.findViewById(R.id.textStoryTitle);
             imageView = itemView.findViewById(R.id.storyImage);
-            textView.setOnClickListener(v -> {
-                Intent switchPage = new Intent(itemView.getContext(), pageComic.class);
-                itemView.getContext().startActivity(switchPage);
-            });
         }
     }
 }

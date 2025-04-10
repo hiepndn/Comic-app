@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comicapp.ChaptersAdapter;
+import com.example.comicapp.chapter.ChaptersAdapter;
 import com.example.comicapp.R;
 
 import java.util.ArrayList;
