@@ -51,4 +51,6 @@ dependencies {
     implementation("com.google.firebase:firebase-database")
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("at.favre.lib:bcrypt:0.10.2")
+
+    implementation ("androidx.appcompat:appcompat:1.2.0")
 }

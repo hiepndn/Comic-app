@@ -7,5 +7,43 @@
         android:id="@+id/webViewChapterContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:gravity="start">
+
+        <Button
+            android:id="@+id/btnBackToChapterList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Quay lại"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="16dp"
+        android:background="@android:color/transparent">
+
+
+        <Button
+            android:id="@+id/btnPreviousChapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="← Trước" />
+
+        <Button
+            android:id="@+id/btnNextChapter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tiếp →"
+            android:layout_marginStart="16dp"/>
+    </LinearLayout>
 
 </FrameLayout>
