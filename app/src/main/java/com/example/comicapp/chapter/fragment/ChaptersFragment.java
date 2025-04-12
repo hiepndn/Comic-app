@@ -1,4 +1,4 @@
-package com.example.comicapp.chapter;
+package com.example.comicapp.chapter.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.comicapp.chapter.ChaptersAdapter;
+import com.example.comicapp.chapter.adapter.ChaptersAdapter;
 import com.example.comicapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +24,8 @@ public class ChaptersFragment extends Fragment {
     private String storyId;
     private RecyclerView recyclerView;
     private ChaptersAdapter adapter;
-    private List<String> chapters = new ArrayList<>();
+    private List<String> chapterKeys = new ArrayList<>();
+    private List<String> chapterTitles = new ArrayList<>();
 
     public static ChaptersFragment newInstance(String storyId) {
         ChaptersFragment fragment = new ChaptersFragment();
@@ -49,7 +50,7 @@ public class ChaptersFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chapters, container, false);
         recyclerView = view.findViewById(R.id.recyclerViewChapters);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new ChaptersAdapter(chapters);
+        adapter = new ChaptersAdapter(getContext(), storyId, chapterKeys, chapterTitles);
         recyclerView.setAdapter(adapter);
 
         loadChaptersFromFirebase();
@@ -57,23 +58,27 @@ public class ChaptersFragment extends Fragment {
     }
 
     private void loadChaptersFromFirebase() {
-        FirebaseDatabase.getInstance().getReference("chapters").child(storyId)
+        FirebaseDatabase.getInstance().getReference("story").child(storyId).child("chapter")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        chapters.clear();
+                        chapterKeys.clear();
+                        chapterTitles.clear();
                         for (DataSnapshot chapterSnap : snapshot.getChildren()) {
-                            String chapterName = chapterSnap.getValue(String.class);
-                            if (chapterName != null) {
-                                chapters.add(chapterName);
+                            String key = chapterSnap.getKey();
+                            String name = chapterSnap.child("name").getValue(String.class);
+                            if (key != null && name != null) {
+                                chapterKeys.add(key);
+                                chapterTitles.add(name);
                             }
                         }
+                        adapter.setChapters(chapterKeys, chapterTitles);
                         adapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        // Xử lý nếu cần
+                        // Handle error if needed
                     }
                 });
     }

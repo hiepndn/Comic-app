@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.comicapp.R;
 import com.example.comicapp.Story;
-import com.example.comicapp.category.fragmnet.ChaptersFragment;
+import com.example.comicapp.chapter.fragment.ChaptersFragment;
 
 import java.util.List;
 import java.util.Locale;
@@ -45,7 +45,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
         Story story = storyList.get(position);
         String name = story.getName();
 
-        // Highlight tên truyện khớp từ khóa
+        // Highlight từ khóa tìm kiếm
         if (!currentQuery.isEmpty()) {
             String lowerName = name.toLowerCase(Locale.getDefault());
             String lowerQuery = currentQuery.toLowerCase(Locale.getDefault());
@@ -66,18 +66,18 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.StoryViewHol
             holder.textView.setText(name);
         }
 
-        // Load ảnh từ URL bằng Glide
+        // Load ảnh truyện bằng Glide
         Glide.with(holder.imageView.getContext())
                 .load(story.getImg())
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_foreground)
                 .into(holder.imageView);
 
-       
+        // Sự kiện click: mở ChaptersFragment
         holder.itemView.setOnClickListener(v -> {
             FragmentManager fragmentManager = ((FragmentActivity) v.getContext()).getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.fragment_container, new ChaptersFragment(story.getId())); // truyền id
+            transaction.replace(R.id.fragment_container, ChaptersFragment.newInstance(story.getId())); // ✅ Sử dụng newInstance
             transaction.addToBackStack(null);
             transaction.commit();
         });
