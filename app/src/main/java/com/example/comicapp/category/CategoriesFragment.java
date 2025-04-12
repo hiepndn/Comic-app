@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.SearchView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -18,7 +20,12 @@ import com.example.comicapp.MainActivity;
 import com.example.comicapp.R;
 import com.example.comicapp.Story;
 import com.example.comicapp.category.adapter.StoryAdapter;
-import com.example.comicapp.search.SearchFragment;
+import com.example.comicapp.search.fragment.SearchFragment;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +35,6 @@ public class CategoriesFragment extends Fragment {
     private RecyclerView recyclerView;
     private StoryAdapter storyAdapter;
     private List<Story> storyList;
-
 
     public CategoriesFragment() {
         super(R.layout.fragment_categories);
@@ -40,14 +46,14 @@ public class CategoriesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
         recyclerView = view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext())); // Dùng LinearLayoutManager để hỗ trợ cuộn
-        recyclerView.setNestedScrollingEnabled(true); // Cho phép cuộn mượt hơn
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setNestedScrollingEnabled(true);
 
         storyList = new ArrayList<>();
         storyAdapter = new StoryAdapter(storyList);
         recyclerView.setAdapter(storyAdapter);
 
-        // Xử lý sự kiện khi nhấn nút chọn thể loại
+        // Nút chọn thể loại
         Button btnComic = view.findViewById(R.id.btnComic);
         Button btnNovel = view.findViewById(R.id.btnNovel);
         Button btnStory = view.findViewById(R.id.btnStory);
@@ -56,7 +62,7 @@ public class CategoriesFragment extends Fragment {
         btnNovel.setOnClickListener(v -> loadStories("novel"));
         btnStory.setOnClickListener(v -> loadStories("story"));
 
-        // Xử lý tìm kiếm với SearchView
+        // Tìm kiếm
         SearchView searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -66,37 +72,48 @@ public class CategoriesFragment extends Fragment {
 
         return view;
     }
+
     private void loadStories(String category) {
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("story");
+
         storyList.clear();
-
-        switch (category) {
-            case "comic":
-                storyList.add(new Story("One Piece", R.drawable.one_piece));
-                storyList.add(new Story("Naruto", R.drawable.one_piece));
-                storyList.add(new Story("Dragon Ball", R.drawable.one_piece));
-                break;
-            case "novel":
-                storyList.add(new Story("Harry Potter", R.drawable.one_piece));
-                storyList.add(new Story("Sherlock Holmes", R.drawable.one_piece));
-                storyList.add(new Story("The Lord of the Rings", R.drawable.one_piece));
-                break;
-            case "story":
-                storyList.add(new Story("Chiếc lá cuối cùng", R.drawable.one_piece));
-                storyList.add(new Story("Tắt đèn", R.drawable.one_piece));
-                storyList.add(new Story("Lão Hạc", R.drawable.one_piece));
-                break;
-        }
-
         storyAdapter.notifyDataSetChanged();
+
+        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot storySnap : snapshot.getChildren()) {
+                    Story story = storySnap.getValue(Story.class);
+                    if (story != null) {
+                        story.setId(storySnap.getKey());
+
+                        String storyCategory = story.getCategory().toLowerCase().trim();
+                        if ((category.equals("comic") && storyCategory.equals("truyện tranh")) ||
+                                (category.equals("novel") && storyCategory.equals("tiểu thuyết")) ||
+                                (category.equals("story") && storyCategory.equals("truyện chữ"))) {
+                            storyList.add(story);
+                        }
+                    }
+                }
+                storyAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Lỗi tải dữ liệu!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
+
     private void navigateToSearchFragment() {
         SearchView searchView = requireView().findViewById(R.id.searchView);
-        searchView.clearFocus(); // Bỏ focus để tránh lỗi giữ bàn phím
+        searchView.clearFocus();
 
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.fragment_container, new SearchFragment()); // Chuyển đến SearchFragment
-        transaction.addToBackStack(null); // Cho phép quay lại màn trước
+        transaction.replace(R.id.fragment_container, new SearchFragment());
+        transaction.addToBackStack(null);
         transaction.commit();
 
         ((MainActivity) requireActivity()).receiveDataFromFragment(R.id.nav_search);

@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     id("com.google.gms.google-services")
-
 }
 
 android {
@@ -34,6 +33,7 @@ android {
 }
 
 dependencies {
+    implementation("com.github.bumptech.glide:glide:4.15.1")
 
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -51,4 +51,6 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
     implementation ("at.favre.lib:bcrypt:0.10.2")
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
+
+    implementation ("androidx.appcompat:appcompat:1.2.0")
 }
