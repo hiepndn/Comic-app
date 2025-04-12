@@ -36,10 +36,24 @@ public class ManDangnhap extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_man_dangnhap);
+        checkLogin();
         onInit();
         load();
     }
-
+    private void checkLogin(){
+        SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
+        int userRole = sharedPreferences.getInt("userRole", 2);
+        Log.e("userRole: ", userRole + "");
+        if(userRole != 2) {
+            if (userRole == 1) {
+                startActivity(new Intent(this, AuthorActivity.class));
+            } else startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }else {
+            // Người dùng chưa đăng nhập, hiển thị màn hình đăng nhập
+            setContentView(R.layout.activity_man_dangnhap);
+        }
+    }
     private void onInit() {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -71,6 +85,7 @@ public class ManDangnhap extends AppCompatActivity {
                         SharedPreferences sharedPreferences = getSharedPreferences("UserSession", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("userId", user.getUserName());
+                        editor.putInt("userRole", user.getRole());
                         editor.apply();
                         //
                         Log.e("user: ", user.getRole() + "");

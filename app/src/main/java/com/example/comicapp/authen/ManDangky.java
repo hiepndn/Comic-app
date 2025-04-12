@@ -59,7 +59,7 @@ public class ManDangky extends AppCompatActivity {
         int role;
         if(isAuthorChecked == true) {
             role = 1;
-        }else role = 1;
+        }else role = 0;
         emails.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

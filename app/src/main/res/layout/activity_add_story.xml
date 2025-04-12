@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".author.manage.add.AddStory">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="220dp"
+        android:text="Thêm truyện mới"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="332dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="24dp"
+        android:hint="Tên truyện"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <EditText
+        android:id="@+id/des"
+        android:layout_width="332dp"
+        android:layout_height="63dp"
+        android:layout_marginTop="31dp"
+        android:hint="Mô tả"
+        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name" />
+
+
+    <Spinner
+        android:id="@+id/category"
+        android:layout_width="336dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="29dp"
+        android:entries="@array/category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/des" />
+
+    <Button
+        android:id="@+id/btnSelectImg"
+        android:layout_width="139dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="37dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="268dp"
+        android:text="Chọn hình ảnh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category"
+        app:layout_constraintVertical_bias="0.017" />
+
+    <Button
+        android:id="@+id/btnSelectFile"
+        android:layout_width="155dp"
+        android:layout_height="57dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginBottom="268dp"
+        android:text="Tải lên chương 1 (định dạng PDF)"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/category"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="132dp"
+        android:text="Thêm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

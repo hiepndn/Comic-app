@@ -8,8 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.comicapp.author.add.AuthorComicFragment;
-import com.example.comicapp.author.del.AuthorDeleteFragment;
+import com.example.comicapp.author.manage.AuthorComicFragment;
 import com.example.comicapp.R;
 import com.example.comicapp.account.AccountFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -37,8 +36,6 @@ public class AuthorActivity extends AppCompatActivity {
 
                 if (itemId == R.id.nav_comic) {
                     selectedFragment = new AuthorComicFragment();
-                } else if (itemId == R.id.nav_delete) {
-                    selectedFragment = new AuthorDeleteFragment();
                 } else if (itemId == R.id.nav_account_author) {
                     selectedFragment = new AccountFragment();
                 }

@@ -57,17 +57,19 @@
             android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chào mừng"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#333333"
             android:gravity="center"
             android:paddingTop="20dp"
+            android:text="Chào mừng"
+            android:textColor="#333333"
+            android:textSize="20sp"
+            android:textStyle="bold"
             android:visibility="gone" />
+
         <Button
             android:id="@+id/buttonLogout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:text="Đăng xuất"
             android:visibility="gone" />
 

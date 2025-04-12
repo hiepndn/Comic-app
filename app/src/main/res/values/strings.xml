@@ -5,4 +5,12 @@
     <!-- Thêm các chuỗi bị lỗi -->
     <string name="welcome_logged_in">Chào mừng bạn đã đăng nhập!</string>
     <string name="please_login_register">Vui lòng đăng nhập hoặc đăng ký!</string>
+
+
+    <string-array name="category">
+        <item>truyện tranh</item>
+        <item>truyện chữ</item>
+        <item>tiểu thuyết</item>
+    </string-array>
+
 </resources>
