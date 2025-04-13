@@ -99,13 +99,21 @@ public class AccountFragment extends Fragment {
     }
 
     private void logout() {
+        // Xóa thông tin đăng nhập của người dùng
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        initReaderUi(0,null);
+
+
+        initReaderUi(0, null);
+
         Intent intent = new Intent(getActivity(), ManDangnhap.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Xóa các Activity trên stack nhưng không thoát app
         startActivity(intent);
+
+        // Kết thúc Activity hiện tại để tránh quay lại bằng nút "Back"
+        requireActivity().finish();
     }
 
     private void fetchFavouriteData(String userKey) {
