@@ -1,10 +1,15 @@
 package com.example.comicapp.home;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,44 +31,68 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private StoryAdapter storyAdapter;
-    private List<Story> storyList;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
+    private RecyclerView recyclerView, recyclerViewHistory;
+    private StoryAdapter storyAdapter, historyAdapter;
+    private final List<Story> storyList = new ArrayList<>();
+    private final List<Story> historyList = new ArrayList<>();
+    private TextView textViewHistory;
+    private ImageView imageView2;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        initViews(view);
 
-        recyclerView = view.findViewById(R.id.recyclerViewHome);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        storyList = new ArrayList<>();
-        storyAdapter = new StoryAdapter(storyList);
-        recyclerView.setAdapter(storyAdapter);
+        String userKey = getUserKey();
+        setupSearchView(view);
 
-
-        SearchView searchView = view.findViewById(R.id.searchView);
-        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                navigateToSearchFragment();
-            }
-        });
-
-
+        setupStoryList();
         loadAllStories();
+
+        if (userKey != null) {
+            setupHistoryList(view, userKey);
+        } else {
+            showNoHistoryMessage();
+        }
 
         return view;
     }
 
+
+    private void initViews(View view) {
+        recyclerView = view.findViewById(R.id.recyclerViewHome);
+        textViewHistory = view.findViewById(R.id.textViewHistory);
+        imageView2 = view.findViewById(R.id.imageView2);
+        recyclerViewHistory = view.findViewById(R.id.historyList);
+    }
+
+    private String getUserKey() {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        return sharedPreferences.getString("userKey", null);
+    }
+
+    private void setupSearchView(View view) {
+        SearchView searchView = view.findViewById(R.id.searchView);
+        searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) navigateToSearchFragment();
+        });
+    }
+
+    private void setupStoryList() {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        storyAdapter = new StoryAdapter(storyList);
+        recyclerView.setAdapter(storyAdapter);
+    }
+
+    private void setupHistoryList(View view, String userKey) {
+        recyclerViewHistory.setLayoutManager(new LinearLayoutManager(getContext()));
+        fetchUserHistory(userKey);
+    }
+
+
     private void loadAllStories() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("story");
-
         storyList.clear();
-        storyAdapter.notifyDataSetChanged();
 
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -85,6 +114,86 @@ public class HomeFragment extends Fragment {
         });
     }
 
+    private void fetchUserHistory(String userKey) {
+        DatabaseReference historyRef = FirebaseDatabase.getInstance().getReference("user").child(userKey).child("history");
+
+        historyRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<String> storyIds = new ArrayList<>();
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    storyIds.add(ds.getKey());
+                }
+
+                if (storyIds.isEmpty()) {
+                    showNoHistoryMessage();
+                } else {
+                    loadStoriesFromIds(storyIds);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("History", "Lỗi lấy lịch sử: " + error.getMessage());
+            }
+        });
+    }
+
+    private void loadStoriesFromIds(List<String> storyIds) {
+        DatabaseReference storyRef = FirebaseDatabase.getInstance().getReference("story");
+        historyList.clear();
+
+        final int[] loadedCount = {0};
+        for (String id : storyIds) {
+            storyRef.child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Story story = snapshot.getValue(Story.class);
+                    if (story != null) {
+                        story.setId(id);
+                        historyList.add(story);
+                    }
+                    checkIfLoadingFinished(storyIds.size());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    Log.e("History", "Lỗi khi load truyện " + id + ": " + error.getMessage());
+                    checkIfLoadingFinished(storyIds.size());
+                }
+
+                private void checkIfLoadingFinished(int total) {
+                    loadedCount[0]++;
+                    if (loadedCount[0] == total) {
+                        updateHistoryUI();
+                    }
+                }
+            });
+        }
+    }
+
+
+    private void showNoHistoryMessage() {
+        textViewHistory.setText("Bạn chưa đọc truyện nào");
+        textViewHistory.setVisibility(View.VISIBLE);
+        imageView2.setVisibility(View.VISIBLE);
+        recyclerViewHistory.setVisibility(View.GONE);
+    }
+
+    private void updateHistoryUI() {
+        historyAdapter = new StoryAdapter(historyList);
+        recyclerViewHistory.setAdapter(historyAdapter);
+        historyAdapter.notifyDataSetChanged();
+
+        if (historyList.isEmpty()) {
+            showNoHistoryMessage();
+        } else {
+            textViewHistory.setVisibility(View.GONE);
+            imageView2.setVisibility(View.GONE);
+            recyclerViewHistory.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void navigateToSearchFragment() {
         SearchView searchView = requireView().findViewById(R.id.searchView);
         searchView.clearFocus();
@@ -97,4 +206,6 @@ public class HomeFragment extends Fragment {
 
         ((MainActivity) requireActivity()).receiveDataFromFragment(R.id.nav_search);
     }
+
 }
+
