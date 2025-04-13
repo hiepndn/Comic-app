@@ -120,6 +120,13 @@ public class ChaptersFragment extends Fragment {
     private void checkFavourite(View view){
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
         String userKey = sharedPreferences.getString("userKey", null);
+
+        if (userKey == null || storyId == null) {
+            // Không có userKey hoặc storyId, không thể tiếp tục
+            Log.e("ChaptersFragment", "userKey hoặc storyId bị null");
+            return;
+        }
+
         DatabaseReference favouritesRef = FirebaseDatabase.getInstance()
                 .getReference("user")
                 .child(userKey)
@@ -128,19 +135,17 @@ public class ChaptersFragment extends Fragment {
         favouritesRef.child(storyId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    check = true;
-                } else {
-                    check = false;
-                }
+                boolean check = dataSnapshot.exists();
                 initFavourite(view, check);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(getContext(), "Lỗi khi kiểm tra danh sách yêu thích: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     private void loadStoryInfo() {
         FirebaseDatabase.getInstance().getReference("story").child(storyId)

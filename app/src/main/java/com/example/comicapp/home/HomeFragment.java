@@ -37,22 +37,27 @@ public class HomeFragment extends Fragment {
     private final List<Story> historyList = new ArrayList<>();
     private TextView textViewHistory;
     private ImageView imageView2;
+    private boolean isLoggedIn = false;
+
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         initViews(view);
 
-        String userKey = getUserKey();
         setupSearchView(view);
 
         setupStoryList();
         loadAllStories();
 
+        String userKey = getUserKey();
+
         if (userKey != null) {
+            isLoggedIn = true;
             setupHistoryList(view, userKey);
         } else {
-            showNoHistoryMessage();
+            isLoggedIn = false;
+            showNoHistoryMessage(); // Sẽ xử lý điều kiện trong hàm này
         }
 
         return view;
@@ -174,11 +179,17 @@ public class HomeFragment extends Fragment {
 
 
     private void showNoHistoryMessage() {
-        textViewHistory.setText("Bạn chưa đọc truyện nào");
+        if (!isLoggedIn) {
+            textViewHistory.setText("Bạn cần đăng nhập để sử dụng tính năng này");
+        } else {
+            textViewHistory.setText("Bạn chưa đọc truyện nào");
+        }
+
         textViewHistory.setVisibility(View.VISIBLE);
         imageView2.setVisibility(View.VISIBLE);
         recyclerViewHistory.setVisibility(View.GONE);
     }
+
 
     private void updateHistoryUI() {
         historyAdapter = new StoryAdapter(historyList);
