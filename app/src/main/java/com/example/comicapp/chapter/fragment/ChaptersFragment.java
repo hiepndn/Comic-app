@@ -6,11 +6,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 import com.example.comicapp.chapter.adapter.ChaptersAdapter;
 import com.example.comicapp.R;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +33,10 @@ public class ChaptersFragment extends Fragment {
     private ChaptersAdapter adapter;
     private List<String> chapterKeys = new ArrayList<>();
     private List<String> chapterTitles = new ArrayList<>();
+    private ImageView imageCover;
+    private TextView textAuthor;
+    private TextView textDescription;
+    private TextView textName;
 
     public static ChaptersFragment newInstance(String storyId) {
         ChaptersFragment fragment = new ChaptersFragment();
@@ -43,6 +52,7 @@ public class ChaptersFragment extends Fragment {
         if (getArguments() != null) {
             storyId = getArguments().getString(ARG_STORY_ID);
         }
+
     }
 
     @Nullable
@@ -56,7 +66,46 @@ public class ChaptersFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         updateHistory();
         loadChaptersFromFirebase();
+
+        imageCover = view.findViewById(R.id.imageCover);
+        textAuthor = view.findViewById(R.id.textAuthor);
+        textDescription = view.findViewById(R.id.textDescriptionLabel);
+        textName= view.findViewById(R.id.textName);
+        loadStoryInfo();
+
         return view;
+    }
+
+    private void loadStoryInfo() {
+        FirebaseDatabase.getInstance().getReference("story").child(storyId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String author = snapshot.child("author").getValue(String.class);
+                        String description = snapshot.child("des").getValue(String.class);
+                        String imageUrl = snapshot.child("img").getValue(String.class);
+                        String Name = snapshot.child("name").getValue(String.class);
+                        if (author != null) {
+                            textAuthor.setText("Tác giả: " + author);
+                        }
+
+                        if (description != null) {
+                            textDescription.setText("Cốt truyện: " + description);
+                        }
+
+                        if (imageUrl != null && getContext() != null) {
+                            Glide.with(getContext()).load(imageUrl).into(imageCover);
+                        }
+                        if(Name != null){
+                            textName.setText("Tên truyện: "+ Name);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        // Xử lý lỗi nếu cần
+                    }
+                });
     }
 
     private void loadChaptersFromFirebase() {
