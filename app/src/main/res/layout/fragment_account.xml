@@ -63,7 +63,23 @@
             android:textColor="#333333"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:visibility="gone" />
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Danh sách yêu thích"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewFavourite"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
         <Button
             android:id="@+id/buttonLogout"
@@ -71,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Đăng xuất"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
     </LinearLayout>
 </ScrollView>

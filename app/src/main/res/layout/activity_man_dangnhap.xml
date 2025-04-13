@@ -19,7 +19,7 @@
             android:id="@+id/dnhap_button"
             android:layout_width="342dp"
             android:layout_height="68dp"
-            android:layout_marginBottom="312dp"
+            android:layout_marginBottom="268dp"
             android:backgroundTint="#AB8A30FF"
             android:padding="12dp"
             android:text="Đăng nhập"
@@ -33,13 +33,14 @@
             android:id="@+id/dky_button"
             android:layout_width="141dp"
             android:layout_height="51dp"
-            android:layout_marginBottom="200dp"
+            android:layout_marginBottom="144dp"
             android:backgroundTint="#AB8A30FF"
             android:padding="12dp"
             android:text="Đăng ký"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.488"
             app:layout_constraintStart_toStartOf="parent" />
 
         <EditText

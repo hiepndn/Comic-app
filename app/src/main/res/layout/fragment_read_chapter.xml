@@ -19,7 +19,8 @@
             android:id="@+id/btnBackToChapterList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="← Quay lại"/>
+            android:text="← Quay lại"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
     <LinearLayout

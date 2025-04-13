@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,21 +12,39 @@
     <ImageView
         android:id="@+id/imageCover"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
+        android:layout_height="400dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="16dp"
-        android:contentDescription="Ảnh bìa truyện" />
+        android:adjustViewBounds="true"
+        android:contentDescription="Ảnh bìa truyện"
+        android:scaleType="centerCrop" />
 
-    <TextView
-        android:id="@+id/textName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tên truyện: "
-        android:textColor="#333333"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="8dp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="450dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên truyện: "
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/favourite"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/heart_1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/textAuthor"
         android:layout_width="wrap_content"
@@ -33,6 +53,7 @@
         android:textColor="#333333"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp" />
 
     <!-- Mô tả -->
