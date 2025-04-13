@@ -152,7 +152,7 @@ public class AddStory extends AppCompatActivity {
         String storyId = firebaseDb.push().getKey();
 
         Map<String, Object> chapter1 = new HashMap<>();
-        chapter1.put("inđex", 0);
+        chapter1.put("index", 0);
         chapter1.put("name", "Chapter 1");
         chapter1.put("url", pdfUrl);
 

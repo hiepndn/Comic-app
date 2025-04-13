@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -15,8 +16,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Comicapp"
-        android:name=".MyApp"
         tools:targetApi="31">
+        <activity
+            android:name=".author.manage.edit.EditChapter"
+            android:exported="false" />
+        <activity
+            android:name=".author.manage.edit.EditStory"
+            android:exported="false" />
         <activity
             android:name=".author.manage.add.AddChapter"
             android:exported="false" />

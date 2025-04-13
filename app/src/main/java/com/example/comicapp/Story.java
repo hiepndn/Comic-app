@@ -11,8 +11,16 @@ public class Story {
     private String author;
     private Map<String, Object> chapter; // Nếu bạn có danh sách chapter
 
-    public Story() {
-        // Constructor rỗng cần thiết cho Firebase
+    public Story() {}
+    public Story (String name, String img) {
+        this.name = name;
+        this.img = img;
+    }
+
+    public Story(String name, String des, String category){
+        this.name = name;
+        this.des = des;
+        this.category = category;
     }
 
     public String getId() {
