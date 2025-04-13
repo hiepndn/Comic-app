@@ -1,4 +1,4 @@
-package com.example.comicapp.category.adapter;
+package com.example.comicapp.reader.category.adapter;
 
 import android.graphics.Color;
 import android.text.Spannable;
@@ -18,9 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.comicapp.R;
-import com.example.comicapp.page.pageComic;
-import com.example.comicapp.Story;
-import com.example.comicapp.chapter.fragment.ChaptersFragment;
+import com.example.comicapp.model.Story;
+import com.example.comicapp.reader.chapter.fragment.ChaptersFragment;
 
 import java.util.List;
 import java.util.Locale;

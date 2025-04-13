@@ -1,14 +1,14 @@
 package com.example.comicapp.storage;
 import android.net.Uri;
 
-import com.example.comicapp.MyApp;
+import com.example.comicapp.model.MyApp;
 
 import okhttp3.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.UUID;
+
 public class SupaUploader {
     private static final String SUPA_URL = "https://qttpsgmmrotwbvcrgute.supabase.co";
     private static final String SUPA_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0dHBzZ21tcm90d2J2Y3JndXRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQzOTExODYsImV4cCI6MjA1OTk2NzE4Nn0.uukpcQ5lpe79rXOByPwqtxvSh6kN60b2eRvmyERPd8E";

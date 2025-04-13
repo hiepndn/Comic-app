@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
-import com.example.comicapp.Story;
 import com.example.comicapp.author.AuthorActivity;
 import com.example.comicapp.author.manage.edit.adapter.ChapterAdapter;
 import com.example.comicapp.storage.SupaUploader;

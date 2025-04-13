@@ -1,14 +1,15 @@
-package com.example.comicapp;
+package com.example.comicapp.reader;
 
 import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.example.comicapp.R;
 import com.example.comicapp.account.AccountFragment;
-import com.example.comicapp.category.CategoriesFragment;
-import com.example.comicapp.home.HomeFragment;
-import com.example.comicapp.search.fragment.SearchFragment;
+import com.example.comicapp.reader.category.CategoriesFragment;
+import com.example.comicapp.reader.home.HomeFragment;
+import com.example.comicapp.reader.search.fragment.SearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 

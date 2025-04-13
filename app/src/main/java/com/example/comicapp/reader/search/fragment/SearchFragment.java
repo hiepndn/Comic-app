@@ -1,4 +1,4 @@
-package com.example.comicapp.search.fragment;
+package com.example.comicapp.reader.search.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,8 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
-import com.example.comicapp.Story;
-import com.example.comicapp.category.adapter.StoryAdapter;
+import com.example.comicapp.model.Story;
+import com.example.comicapp.reader.category.adapter.StoryAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

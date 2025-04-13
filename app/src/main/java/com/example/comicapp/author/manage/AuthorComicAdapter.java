@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
-import com.example.comicapp.Story;
+import com.example.comicapp.model.Story;
 import com.example.comicapp.author.manage.add.AddChapter;
 import com.example.comicapp.author.manage.edit.EditStory;
 import com.google.firebase.database.DataSnapshot;

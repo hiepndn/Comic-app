@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.model;
 
 import java.util.Map;
 

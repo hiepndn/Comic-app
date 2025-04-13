@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicapp.R;
+import com.example.comicapp.model.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -60,7 +61,22 @@ public class ManDangky extends AppCompatActivity {
         if(isAuthorChecked == true) {
             role = 1;
         }else role = 0;
+        emails.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkRegister = 0;
+            }
+        });
         if(emailInput.isEmpty() || passwordInput.isEmpty()){
             Toast.makeText(this, "Vui lòng nhập đủ user name và password!", Toast.LENGTH_SHORT).show();
         }

@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.comicapp.author.AuthorActivity;
+import com.example.comicapp.reader.MainActivity;
 
 public class start_page extends AppCompatActivity {
 

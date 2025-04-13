@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.comicapp.R;
-import com.example.comicapp.Story;
+import com.example.comicapp.model.Story;
 import com.example.comicapp.author.manage.add.AddStory;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;

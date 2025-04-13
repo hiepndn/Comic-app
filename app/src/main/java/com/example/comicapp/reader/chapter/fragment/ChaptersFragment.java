@@ -1,4 +1,4 @@
-package com.example.comicapp.chapter.fragment;
+package com.example.comicapp.reader.chapter.fragment;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.comicapp.chapter.adapter.ChaptersAdapter;
+import com.example.comicapp.reader.chapter.adapter.ChaptersAdapter;
 import com.example.comicapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -41,7 +41,6 @@ public class ChaptersFragment extends Fragment {
     private TextView textDescription;
     private TextView textName;
     private ImageView favourite;
-    private Boolean check;
 
     public static ChaptersFragment newInstance(String storyId) {
         ChaptersFragment fragment = new ChaptersFragment();
@@ -83,7 +82,7 @@ public class ChaptersFragment extends Fragment {
         return view;
     }
 
-    private void initFavourite(View view, Boolean check){
+    private void initFavourite(View view, Boolean check, String userKey){
         favourite = view.findViewById(R.id.favourite);
         if(check){
             favourite.setImageResource(R.drawable.heart_2);
@@ -92,8 +91,6 @@ public class ChaptersFragment extends Fragment {
             favourite.setImageResource(R.drawable.heart_1);
         }
         favourite.setOnClickListener(v-> {
-            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
-            String userKey = sharedPreferences.getString("userKey", null);
             if(userKey == null){
                 Toast.makeText(getContext(), "Vui lòng đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
             }else{
@@ -122,8 +119,7 @@ public class ChaptersFragment extends Fragment {
         String userKey = sharedPreferences.getString("userKey", null);
 
         if (userKey == null || storyId == null) {
-            // Không có userKey hoặc storyId, không thể tiếp tục
-            Log.e("ChaptersFragment", "userKey hoặc storyId bị null");
+            initFavourite(view, false, userKey);
             return;
         }
 
@@ -136,7 +132,7 @@ public class ChaptersFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 boolean check = dataSnapshot.exists();
-                initFavourite(view, check);
+                initFavourite(view, check, userKey);
             }
 
             @Override

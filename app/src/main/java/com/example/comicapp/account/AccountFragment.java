@@ -16,11 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.comicapp.Story;
+import com.example.comicapp.model.Story;
 import com.example.comicapp.authen.ManDangky;
 import com.example.comicapp.authen.ManDangnhap;
 import com.example.comicapp.R;
-import com.example.comicapp.category.adapter.StoryAdapter;
+import com.example.comicapp.reader.category.adapter.StoryAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
