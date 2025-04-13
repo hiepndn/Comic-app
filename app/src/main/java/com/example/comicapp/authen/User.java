@@ -4,6 +4,7 @@ public class User {
     private String userName;
     private String psw;
     private int role;
+    private String userKey;
 
     public User() {};
 
@@ -24,7 +25,12 @@ public class User {
     public int getRole() {
         return role;
     }
-
+    public String getUserKey() {
+        return userKey;
+    }
+    public void setUserKey(String userKey) {
+        this.userKey = userKey;
+    }
     public void setRole(int role) {
         this.role = role;
     }

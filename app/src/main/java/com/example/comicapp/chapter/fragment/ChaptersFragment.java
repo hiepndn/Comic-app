@@ -1,5 +1,7 @@
 package com.example.comicapp.chapter.fragment;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +54,7 @@ public class ChaptersFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ChaptersAdapter(getContext(), storyId, chapterKeys, chapterTitles);
         recyclerView.setAdapter(adapter);
-
+        updateHistory();
         loadChaptersFromFirebase();
         return view;
     }
@@ -81,5 +83,16 @@ public class ChaptersFragment extends Fragment {
                         // Handle error if needed
                     }
                 });
+    }
+
+    private void updateHistory(){
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        String userKey = sharedPreferences.getString("userKey", null);
+        if(userKey == null){
+            return;
+        }
+        else{
+            FirebaseDatabase.getInstance().getReference("user").child(userKey).child("history").child(storyId).setValue(true);
+        }
     }
 }

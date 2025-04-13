@@ -86,6 +86,7 @@ public class ManDangnhap extends AppCompatActivity {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("userId", user.getUserName());
                         editor.putInt("userRole", user.getRole());
+                        editor.putString("userKey", user.getUserKey());
                         editor.apply();
                         //
                         Log.e("user: ", user.getRole() + "");
@@ -110,6 +111,7 @@ public class ManDangnhap extends AppCompatActivity {
         db.get().addOnCompleteListener(task -> {
             for(DataSnapshot ds : task.getResult().getChildren()){
                 User user = ds.getValue(User.class);
+                user.setUserKey(ds.getKey());
                 users.add(user);
             }
         });
