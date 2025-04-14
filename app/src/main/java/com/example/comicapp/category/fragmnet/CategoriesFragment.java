@@ -1,4 +1,4 @@
-package com.example.comicapp.category;
+package com.example.comicapp.category.fragmnet;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -45,6 +45,7 @@ public class CategoriesFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_categories, container, false);
 
+
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setNestedScrollingEnabled(true);
@@ -53,7 +54,7 @@ public class CategoriesFragment extends Fragment {
         storyAdapter = new StoryAdapter(storyList);
         recyclerView.setAdapter(storyAdapter);
 
-        // Nút chọn thể loại
+
         Button btnComic = view.findViewById(R.id.btnComic);
         Button btnNovel = view.findViewById(R.id.btnNovel);
         Button btnStory = view.findViewById(R.id.btnStory);
@@ -62,7 +63,7 @@ public class CategoriesFragment extends Fragment {
         btnNovel.setOnClickListener(v -> loadStories("novel"));
         btnStory.setOnClickListener(v -> loadStories("story"));
 
-        // Tìm kiếm
+
         SearchView searchView = view.findViewById(R.id.searchView);
         searchView.setOnQueryTextFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -70,14 +71,20 @@ public class CategoriesFragment extends Fragment {
             }
         });
 
+
+        loadAllStories();
+
         return view;
     }
+
 
     private void loadStories(String category) {
         DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("story");
 
+
         storyList.clear();
         storyAdapter.notifyDataSetChanged();
+
 
         databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -86,6 +93,7 @@ public class CategoriesFragment extends Fragment {
                     Story story = storySnap.getValue(Story.class);
                     if (story != null) {
                         story.setId(storySnap.getKey());
+
 
                         String storyCategory = story.getCategory().toLowerCase().trim();
                         if ((category.equals("comic") && storyCategory.equals("truyện tranh")) ||
@@ -103,8 +111,37 @@ public class CategoriesFragment extends Fragment {
                 Toast.makeText(getContext(), "Lỗi tải dữ liệu!", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
+
+
+    private void loadAllStories() {
+        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("story");
+
+
+        storyList.clear();
+        storyAdapter.notifyDataSetChanged();
+
+
+        databaseRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot storySnap : snapshot.getChildren()) {
+                    Story story = storySnap.getValue(Story.class);
+                    if (story != null) {
+                        story.setId(storySnap.getKey());
+                        storyList.add(story);
+                    }
+                }
+                storyAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Lỗi tải dữ liệu!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void navigateToSearchFragment() {
         SearchView searchView = requireView().findViewById(R.id.searchView);
@@ -115,6 +152,7 @@ public class CategoriesFragment extends Fragment {
         transaction.replace(R.id.fragment_container, new SearchFragment());
         transaction.addToBackStack(null);
         transaction.commit();
+
 
         ((MainActivity) requireActivity()).receiveDataFromFragment(R.id.nav_search);
     }
