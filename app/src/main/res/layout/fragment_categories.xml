@@ -4,8 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+<<<<<<< HEAD
     tools:context=".category.fragmnet.CategoriesFragment">
 
+=======
+    tools:context=".reader.category.CategoriesFragment">
+>>>>>>> origin
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/searchBarLayout"

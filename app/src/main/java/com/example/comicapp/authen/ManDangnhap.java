@@ -13,7 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.comicapp.author.AuthorActivity;
-import com.example.comicapp.MainActivity;
+import com.example.comicapp.model.User;
+import com.example.comicapp.reader.MainActivity;
 import com.example.comicapp.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;

@@ -1,4 +1,4 @@
-package com.example.comicapp;
+package com.example.comicapp.model;
 import android.app.Application;
 import android.content.Context;
 

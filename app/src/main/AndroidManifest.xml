@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MyApp"
+        android:name=".model.MyApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -30,9 +30,6 @@
             android:name=".author.manage.add.AddStory"
             android:exported="false" />
         <activity
-            android:name=".page.pageComic"
-            android:exported="false" />
-        <activity
             android:name=".author.AuthorActivity"
             android:exported="false" />
         <activity
@@ -51,7 +48,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".reader.MainActivity"
             android:exported="true" />
     </application>
 

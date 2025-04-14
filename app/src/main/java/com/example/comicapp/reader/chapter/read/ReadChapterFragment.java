@@ -1,4 +1,4 @@
-package com.example.comicapp.read;
+package com.example.comicapp.reader.chapter.read;
 
 import android.os.Bundle;
 import android.util.Log;

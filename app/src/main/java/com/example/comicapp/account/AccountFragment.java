@@ -16,11 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.comicapp.Story;
+import com.example.comicapp.model.Story;
 import com.example.comicapp.authen.ManDangky;
 import com.example.comicapp.authen.ManDangnhap;
 import com.example.comicapp.R;
-import com.example.comicapp.category.adapter.StoryAdapter;
+import com.example.comicapp.reader.category.adapter.StoryAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -99,13 +99,21 @@ public class AccountFragment extends Fragment {
     }
 
     private void logout() {
+        // Xóa thông tin đăng nhập của người dùng
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.clear();
         editor.apply();
-        initReaderUi(0,null);
+
+
+        initReaderUi(0, null);
+
         Intent intent = new Intent(getActivity(), ManDangnhap.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // Xóa các Activity trên stack nhưng không thoát app
         startActivity(intent);
+
+        // Kết thúc Activity hiện tại để tránh quay lại bằng nút "Back"
+        requireActivity().finish();
     }
 
     private void fetchFavouriteData(String userKey) {

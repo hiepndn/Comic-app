@@ -57,9 +57,8 @@
         android:id="@+id/imageStory"
         android:layout_width="125dp"
         android:layout_height="94dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="64dp"
         android:layout_marginTop="21dp"
-        android:layout_marginBottom="20dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="parent"
@@ -71,10 +70,10 @@
         android:layout_width="116dp"
         android:layout_height="55dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="40dp"
         android:text="Chọn hình ảnh"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.61"
+        app:layout_constraintHorizontal_bias="0.381"
         app:layout_constraintStart_toEndOf="@+id/imageStory"
         app:layout_constraintTop_toBottomOf="@+id/category" />
 
@@ -82,7 +81,7 @@
         android:id="@+id/btn_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="22dp"
+        android:layout_marginBottom="108dp"
         android:text="Sửa truyện"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -98,7 +97,7 @@
         app:layout_constraintHorizontal_bias="0.476"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/category"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintVertical_bias="0.921">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -106,11 +105,11 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewChapters"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.0" />

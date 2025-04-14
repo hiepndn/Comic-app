@@ -1,4 +1,4 @@
-package com.example.comicapp.home;
+package com.example.comicapp.reader.home;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -19,11 +19,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.comicapp.MainActivity;
+import com.example.comicapp.reader.MainActivity;
 import com.example.comicapp.R;
-import com.example.comicapp.Story;
-import com.example.comicapp.category.adapter.StoryAdapter;
-import com.example.comicapp.search.fragment.SearchFragment;
+import com.example.comicapp.model.Story;
+import com.example.comicapp.reader.category.adapter.StoryAdapter;
+import com.example.comicapp.reader.search.fragment.SearchFragment;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;

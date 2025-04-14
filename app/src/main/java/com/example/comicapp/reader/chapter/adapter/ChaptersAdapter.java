@@ -1,4 +1,4 @@
-package com.example.comicapp.chapter.adapter;
+package com.example.comicapp.reader.chapter.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.comicapp.R;
-import com.example.comicapp.read.ReadChapterFragment;
+import com.example.comicapp.reader.chapter.read.ReadChapterFragment;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.comicapp.authen;
+package com.example.comicapp.model;
 
 public class User {
     private String userName;
