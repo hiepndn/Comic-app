@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Đăng nhập"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="#AB8A30FF"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:layout_marginBottom="16dp"
@@ -72,16 +72,17 @@
             android:textColor="#666666"
             android:layout_marginBottom="16dp"
             android:layout_gravity="center" />
+
         <Button
             android:id="@+id/dky_button"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Đăng ký"
-            android:backgroundTint="@color/black"
-            android:textColor="@android:color/white"
+            android:layout_gravity="center"
+            android:backgroundTint="#AB8A30FF"
             android:paddingLeft="24dp"
             android:paddingRight="24dp"
-            android:layout_gravity="center" />
+            android:text="Đăng ký"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 </ScrollView>

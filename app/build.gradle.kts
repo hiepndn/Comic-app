@@ -50,4 +50,5 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("androidx.appcompat:appcompat:1.2.0")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation ("com.google.android.material:material:1.9.0")
 }

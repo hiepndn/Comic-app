@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -57,6 +56,7 @@ public class ChaptersFragment extends Fragment {
         if (getArguments() != null) {
             storyId = getArguments().getString(ARG_STORY_ID);
         }
+
     }
 
     @Nullable
@@ -64,25 +64,84 @@ public class ChaptersFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chapters, container, false);
-
-
         recyclerView = view.findViewById(R.id.recyclerViewChapters);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ChaptersAdapter(getContext(), storyId, chapterKeys, chapterTitles);
         recyclerView.setAdapter(adapter);
+        updateHistory();
+        loadChaptersFromFirebase();
+        checkFavourite(view);
 
         imageCover = view.findViewById(R.id.imageCover);
         textAuthor = view.findViewById(R.id.textAuthor);
         textDescription = view.findViewById(R.id.textDescriptionLabel);
-        textName = view.findViewById(R.id.textName);
+        textName= view.findViewById(R.id.textName);
 
         loadStoryInfo();
-        loadChaptersFromFirebase();
-        updateHistory();
-        checkFavourite(view);
 
         return view;
     }
+
+    private void initFavourite(View view, Boolean check, String userKey){
+        favourite = view.findViewById(R.id.favourite);
+        if(check){
+            favourite.setImageResource(R.drawable.heart_2);
+        }
+        else{
+            favourite.setImageResource(R.drawable.heart_1);
+        }
+        favourite.setOnClickListener(v-> {
+            if(userKey == null){
+                Toast.makeText(getContext(), "Vui lòng đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
+            }else{
+                checkFavourite(view);
+                if(check){
+                    FirebaseDatabase.getInstance()
+                            .getReference("user")
+                            .child(userKey)
+                            .child("favourite")
+                            .child(storyId)
+                            .removeValue();
+                    favourite.setImageResource(R.drawable.heart_1);
+                    Toast.makeText(getContext(), "Đã xóa truyện khỏi danh sách yêu thích thành công", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    FirebaseDatabase.getInstance().getReference("user").child(userKey).child("favourite").child(storyId).setValue(true);
+                    favourite.setImageResource(R.drawable.heart_2);
+                    Toast.makeText(getContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void checkFavourite(View view){
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
+        String userKey = sharedPreferences.getString("userKey", null);
+
+        if (userKey == null || storyId == null) {
+            initFavourite(view, false, userKey);
+            return;
+        }
+
+        DatabaseReference favouritesRef = FirebaseDatabase.getInstance()
+                .getReference("user")
+                .child(userKey)
+                .child("favourite");
+
+        favouritesRef.child(storyId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean check = dataSnapshot.exists();
+                initFavourite(view, check, userKey);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getContext(), "Lỗi khi kiểm tra danh sách yêu thích: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void loadStoryInfo() {
         FirebaseDatabase.getInstance().getReference("story").child(storyId)
@@ -92,19 +151,26 @@ public class ChaptersFragment extends Fragment {
                         String author = snapshot.child("author").getValue(String.class);
                         String description = snapshot.child("des").getValue(String.class);
                         String imageUrl = snapshot.child("img").getValue(String.class);
-                        String name = snapshot.child("name").getValue(String.class);
+                        String Name = snapshot.child("name").getValue(String.class);
+                        if (author != null) {
+                            textAuthor.setText("Tác giả: " + author);
+                        }
 
-                        if (author != null) textAuthor.setText("Tác giả: " + author);
-                        if (description != null) textDescription.setText("Cốt truyện: " + description);
-                        if (name != null) textName.setText("Tên truyện: " + name);
+                        if (description != null) {
+                            textDescription.setText("Cốt truyện: " + description);
+                        }
+
                         if (imageUrl != null && getContext() != null) {
                             Glide.with(getContext()).load(imageUrl).into(imageCover);
+                        }
+                        if(Name != null){
+                            textName.setText("Tên truyện: "+ Name);
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-                        // Handle error if needed
+                        // Xử lý lỗi nếu cần
                     }
                 });
     }
@@ -135,66 +201,14 @@ public class ChaptersFragment extends Fragment {
                 });
     }
 
-    private void updateHistory() {
+    private void updateHistory(){
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
         String userKey = sharedPreferences.getString("userKey", null);
-        if (userKey != null) {
-            FirebaseDatabase.getInstance().getReference("user").child(userKey).child("history").child(storyId).setValue(true);
-        }
-    }
-
-    private void checkFavourite(View view) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
-        String userKey = sharedPreferences.getString("userKey", null);
-        if (userKey == null || storyId == null) {
-            Log.e("ChaptersFragment", "userKey hoặc storyId bị null");
+        if(userKey == null){
             return;
         }
-
-        DatabaseReference favouritesRef = FirebaseDatabase.getInstance()
-                .getReference("user").child(userKey).child("favourite");
-
-        favouritesRef.child(storyId).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                boolean isFavourite = dataSnapshot.exists();
-                initFavourite(view, isFavourite);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(getContext(), "Lỗi khi kiểm tra danh sách yêu thích: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void initFavourite(View view, Boolean isFavourite) {
-        favourite = view.findViewById(R.id.favourite);
-        favourite.setImageResource(isFavourite ? R.drawable.heart_2 : R.drawable.heart_1);
-
-        favourite.setOnClickListener(v -> {
-            SharedPreferences sharedPreferences = requireActivity().getSharedPreferences("UserSession", Context.MODE_PRIVATE);
-            String userKey = sharedPreferences.getString("userKey", null);
-
-            if (userKey == null) {
-                Toast.makeText(getContext(), "Vui lòng đăng nhập để sử dụng tính năng này", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            if (isFavourite) {
-                FirebaseDatabase.getInstance().getReference("user").child(userKey)
-                        .child("favourite").child(storyId).removeValue();
-                favourite.setImageResource(R.drawable.heart_1);
-                Toast.makeText(getContext(), "Đã xóa khỏi danh sách yêu thích", Toast.LENGTH_SHORT).show();
-            } else {
-                FirebaseDatabase.getInstance().getReference("user").child(userKey)
-                        .child("favourite").child(storyId).setValue(true);
-                favourite.setImageResource(R.drawable.heart_2);
-                Toast.makeText(getContext(), "Đã thêm vào danh sách yêu thích", Toast.LENGTH_SHORT).show();
-            }
-
-            // Cập nhật lại trạng thái yêu thích sau khi click
-            checkFavourite(view);
-        });
+        else{
+            FirebaseDatabase.getInstance().getReference("user").child(userKey).child("history").child(storyId).setValue(true);
+        }
     }
 }
